@@ -1,0 +1,23 @@
+{
+  "name": "prj-01-astronomy",
+  "version": "0.0.0",
+  "description": "This project creates a Blockchain application to store data into the blocks",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "app": "node app.js"
+  },
+  "author": "Udacity - jose.morales@udacity.com",
+  "license": "ISC",
+  "dependencies": {
+    "bitcoinjs-message": "^2.1.3",
+    "cookie-parser": "~1.4.4",
+    "crypto-js": "^4.0.0",
+    "debug": "~2.6.9",
+    "express": "~4.16.1",
+    "hex2ascii": "0.0.3",
+    "http-errors": "~1.6.3",
+    "morgan": "~1.9.1",
+    "pug": "^3.0.0"
+  }
+}
