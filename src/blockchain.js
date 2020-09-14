@@ -187,20 +187,17 @@ class Blockchain {
      */
     getStarsByWalletAddress (address) {
         let self = this;
-        return new Promise((resolve, reject) => {
+        return new Promise(async (resolve, reject) => {
             let result = [];
 
-            let findStar = function(block, index, chain){
-                let body = JSON.parse(hex2ascii(block.body))
+            for (let i = 0; i < self.chain.length; i++){
+                let body = await self.chain[i].getBData();
                 if ("owner" in body && "star" in body){
                     if(body.owner === address){
                         result.push(body);
                     }
                 }
-                return false;
             }
-
-            self.chain.forEach(findStar);
 
             resolve(result.length === 0 ? null : result);
 
@@ -217,14 +214,17 @@ class Blockchain {
         let self = this;
         let errorLog = [];
         return new Promise(async (resolve, reject) => {
-
-            let findFailure = function(block, index, chain) {
-                if(! block.validate()) return true;
-                if( index === 0) return false;
-                return block.previousBlockHash !== chain[index - 1].hash;
+            for (let i = 0; i < self.chain.length; i++) {
+                let block = self.chain[i];
+                if(! await block.validate()) {
+                    errorLog.push(block);
+                    continue;
+                }
+                if(i === 0) continue;
+                if(block.previousBlockHash !== self.chain[i - 1].hash) {
+                    errorLog.push(block);
+                }
             }
-
-            errorLog = self.chain.filter(findFailure);
 
             if(errorLog.length === 0){
                 resolve(`All ${self.chain.length} block in the chain are valid.`)

@@ -119,7 +119,7 @@ class BlockchainController {
         });
     }
 
-    // This endpoint allows you to retrieve the block by hash (GET endpoint)
+    // This endpoint allows you to validate all of the blocks in the chain.
     getChainStatus() {
         this.app.get("/chainStatus", async (req, res) => {
             try {
